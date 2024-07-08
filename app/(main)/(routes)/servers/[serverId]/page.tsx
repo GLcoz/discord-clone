@@ -1,36 +1,38 @@
-import { GetStaticProps, GetStaticPaths, NextPage } from 'next';
+// /app/(main)/(routes)/servers/[serverId]/page.tsx
 
-interface ServerIdPageProps {
-    serverId: string;
-}
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
-const ServerIdPage: NextPage<ServerIdPageProps> = ({ serverId }) => {
-    return (
-        <div>
-            Server ID Page: {serverId}
-        </div>
-    );
-};
+const ServerIdPage = () => {
+  const [data, setData] = useState(null);
+  const router = useRouter();
+  const { serverId } = router.query;
 
-export const getStaticProps: GetStaticProps<ServerIdPageProps> = async (context) => {
-    const serverId = context.params?.serverId as string;
+  useEffect(() => {
+    if (serverId) {
+      const fetchData = async () => {
+        try {
+          const response = await fetch(`/api/servers/${serverId}`);
+          const result = await response.json();
+          setData(result);
+        } catch (error) {
+          console.error("Failed to fetch data:", error);
+        }
+      };
 
-    return {
-        props: {
-            serverId,
-        },
-    };
-};
+      fetchData();
+    }
+  }, [serverId]);
 
-export const getStaticPaths: GetStaticPaths = async () => {
-    // Here you can fetch or define your dynamic paths
-    return {
-        paths: [
-            { params: { serverId: '1' } },
-            { params: { serverId: '2' } },
-        ],
-        fallback: false,
-    };
+  if (!data) return <div>Loading...</div>;
+
+  return (
+    <div>
+      {/* Render your data here */}
+      <h1>{data.title}</h1>
+      <p>{data.description}</p>
+    </div>
+  );
 };
 
 export default ServerIdPage;
