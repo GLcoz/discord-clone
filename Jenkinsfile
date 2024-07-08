@@ -10,7 +10,7 @@ pipeline {
                 #!/bin/bash
                 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
                 export NVM_DIR="$HOME/.nvm"
-                [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+                [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
                 nvm install ${NODE_VERSION}
                 nvm use ${NODE_VERSION}
                 '''
@@ -26,7 +26,7 @@ pipeline {
                 echo 'Building...'
                 sh '''
                 export NVM_DIR="$HOME/.nvm"
-                [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+                [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
                 nvm use ${NODE_VERSION}
                 npm install
                 npm run build
@@ -38,7 +38,7 @@ pipeline {
                 echo 'Testing...'
                 sh '''
                 export NVM_DIR="$HOME/.nvm"
-                [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+                [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
                 nvm use ${NODE_VERSION}
                 npm test
                 '''
