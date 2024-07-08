@@ -1,13 +1,13 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 
 interface ServerIdPageProps {
-    serverId: string;
+    serverId?: string; // Make serverId optional if it's not always provided
 }
 
 const ServerIdPage: React.FC<ServerIdPageProps> = ({ serverId }) => {
     return (
         <div>
-            Server ID Page
+            Server ID Page: {serverId}
         </div>
     );
 }
