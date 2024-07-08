@@ -1,47 +1,31 @@
 pipeline {
     agent any
-
-    environment {
-        NODEJS_HOME = tool name: 'nodejs'
-        PATH = "${NODEJS_HOME}/bin:${env.PATH}"
-    }
-
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/GLcoz/discord-clone.git', branch: 'master'
+                // Checkout the code from the repository
+                git 'https://github.com/GLcoz/discord-clone.git'
             }
         }
-
-        stage('Install Dependencies') {
-            steps {
-                sh 'npm install'
-            }
-        }
-
         stage('Build') {
             steps {
+                echo 'Building...'
+                sh 'npm install'
                 sh 'npm run build'
             }
         }
-
         stage('Test') {
             steps {
+                echo 'Testing...'
                 sh 'npm test'
             }
         }
-
         stage('Deploy') {
             steps {
-                // Add your deployment steps here, e.g., uploading to a server
-                // sh 'npm run deploy'
+                echo 'Deploying...'
+                // Add your deployment command here
+                // sh 'your-deploy-command'
             }
-        }
-    }
-
-    post {
-        always {
-            cleanWs()
         }
     }
 }
