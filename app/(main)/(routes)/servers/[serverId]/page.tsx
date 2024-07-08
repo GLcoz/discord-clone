@@ -23,6 +23,7 @@ export const getStaticProps: GetStaticProps<ServerIdPageProps> = async (context)
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
+    // Here you can fetch or define your dynamic paths
     return {
         paths: [
             { params: { serverId: '1' } },
